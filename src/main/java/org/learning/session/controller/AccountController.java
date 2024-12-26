@@ -10,10 +10,10 @@ import java.io.IOException;
 
 @WebServlet("/account")
 public class AccountController extends HttpServlet {
+    private static final String ACCOUNT_PAGE = "/WEB-INF/home/auth/account/account.jsp";
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-
-        req.getRequestDispatcher("/WEB-INF/home/auth/account/account.jsp").forward(req, resp);
+        req.getRequestDispatcher(ACCOUNT_PAGE).forward(req, resp);
     }
 }

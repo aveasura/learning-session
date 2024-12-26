@@ -10,10 +10,10 @@ import java.io.IOException;
 
 @WebServlet("/home")
 public class HomeController extends HttpServlet {
+    private static final String HOME_PAGE = "/WEB-INF/home/home.jsp";
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-
-        req.getRequestDispatcher("/WEB-INF/home/home.jsp").forward(req, resp);
+        req.getRequestDispatcher(HOME_PAGE).forward(req, resp);
     }
 }

@@ -8,21 +8,23 @@
 <%@ page contentType="text/html;charset=UTF-8" isELIgnored="false" language="java" %>
 <html>
 <head>
-    <title>Home page</title>
+    <title>Home</title>
 </head>
 <body>
 
-<form action="${pageContext.request.contextPath}/home" method="get">
-    <h1>site main page!</h1>
+<h1>Главная страница сайта</h1>
+<p>.......разный текст 1312312.............</p>
+<p>.......12314234.............</p>
+<p>.....р56р56р5........</p>
+<p>текст</p>
+<p>         фывфвыфввы</p>
 
-</form>
+<br/><hr/>
 
-<hr/>
-<a href="${pageContext.request.contextPath}/home">home</a>
-<br/>
-<a href="${pageContext.request.contextPath}/registration">registration</a>
-<br/>
-<a href="${pageContext.request.contextPath}/login">login</a>
+<a href="${pageContext.request.contextPath}/home">Обновить страницу сайта</a><br/>
+<a href="${pageContext.request.contextPath}/registration">Зарегистрироваться</a><br/>
+<a href="${pageContext.request.contextPath}/login">Войти</a>
 
+<br/><hr/>
 </body>
 </html>

@@ -8,15 +8,21 @@
 <%@ page contentType="text/html;charset=UTF-8" isELIgnored="false" language="java" %>
 <html>
 <head>
-    <title>Reg</title>
+    <title>Registration</title>
 </head>
 <body>
 
+<h1>Для того чтобы зарегистрироваться, выполните следующие действия:</h1>
+
 <form action="${pageContext.request.contextPath}/registration" method="post">
-    <label for="username">write you name</label>
-    <input type="text" id="username" name="username" required>
-    <input type="hidden" id="userId" name="userId">
-    <button type="submit">send</button>
+    <label for="username">Укажите логин для регистрации:</label>
+    <input type="text" id="username" name="username" placeholder="login" required><br/><br/>
+
+    <label for="password">Задайте пароль:</label>
+    <input type="password" id="password" name="password" placeholder="password" required><br/><br/>
+
+    <hr/>
+    <button type="submit">Зарегистрироваться</button>
 </form>
 
 </body>

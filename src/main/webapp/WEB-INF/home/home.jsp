@@ -17,8 +17,11 @@
 
 </form>
 
+<hr/>
 <a href="${pageContext.request.contextPath}/home">home</a>
+<br/>
 <a href="${pageContext.request.contextPath}/registration">registration</a>
+<br/>
 <a href="${pageContext.request.contextPath}/login">login</a>
 
 </body>

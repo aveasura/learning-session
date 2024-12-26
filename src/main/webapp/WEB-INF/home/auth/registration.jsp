@@ -14,7 +14,8 @@
 
 <form action="${pageContext.request.contextPath}/registration" method="post">
     <label for="username">write you name</label>
-    <input type="text" id="username" name="name" required>
+    <input type="text" id="username" name="username" required>
+    <input type="hidden" id="userId" name="userId">
     <button type="submit">send</button>
 </form>
 

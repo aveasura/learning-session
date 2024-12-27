@@ -32,4 +32,9 @@ public class UserDAO {
     public boolean isUserExist(User user) {
         return users.containsValue(user);
     }
+
+    public void deleteById(long userId) {
+        users.remove(userId);
+        System.out.println("Удален ID: " + userId);
+    }
 }

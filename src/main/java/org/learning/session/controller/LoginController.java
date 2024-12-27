@@ -11,10 +11,10 @@ import org.learning.session.service.ValidationException;
 
 import java.io.IOException;
 
-@WebServlet("/registration")
-public class RegistrationController extends HttpServlet {
-    private static final String REGISTRATION_PAGE = "/WEB-INF/home/auth/registration.jsp";
-    private static final String REGISTRATION_REDIRECT = "/registration";
+@WebServlet("/login")
+public class LoginController extends HttpServlet {
+    private static final String LOGIN_PAGE = "/WEB-INF/home/auth/login.jsp";
+    private static final String LOGIN_REDIRECT = "/login";
     private static final String ACCOUNT_REDIRECT = "/account";
 
     private UserService userService;
@@ -34,7 +34,7 @@ public class RegistrationController extends HttpServlet {
             return;
         }
 
-        req.getRequestDispatcher(REGISTRATION_PAGE).forward(req, resp);
+        req.getRequestDispatcher(LOGIN_PAGE).forward(req, resp);
     }
 
     @Override
@@ -44,20 +44,20 @@ public class RegistrationController extends HttpServlet {
         String password = req.getParameter("password");
         HttpSession session = req.getSession();
 
-        // Проверка активна ли сессия для данного юзера(попытка зарегистрироваться с X вкладок). || подумать: фильтры
+        // Проверка активна ли сессия для данного юзера(попытка лоигн с X вкладок). || подумать: фильтры
         if (session.getAttribute("userId") != null) {
-            redirect(req, resp, ACCOUNT_REDIRECT, "Вы уже авторизированны, ID: " + session.getAttribute("userId"));
+            redirect(req, resp, ACCOUNT_REDIRECT, "Вы уже авторизованы. ID: " + session.getAttribute("userId"));
             return;
         }
 
         try {
-            long userId = userService.createUser(username, password);
+            long userId = userService.authenticateUser(username, password);
             session.setAttribute("userId", userId);
             session.setAttribute("username", username);
 
-            redirect(req, resp, ACCOUNT_REDIRECT, "Пользователь успешно зарегистрирован. ID: " + userId);
+            redirect(req, resp, ACCOUNT_REDIRECT, "Пользователь успешно авторизован. ID: " + userId);
         } catch (ValidationException e) {
-            redirect(req, resp, REGISTRATION_REDIRECT, e.getMessage());
+            redirect(req, resp, LOGIN_REDIRECT, e.getMessage());
         }
     }
 

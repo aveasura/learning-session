@@ -28,4 +28,8 @@ public class UserDAO {
     public User findUserById(long userId) {
         return users.get(userId);
     }
+
+    public boolean isUserExist(User user) {
+        return users.containsValue(user);
+    }
 }

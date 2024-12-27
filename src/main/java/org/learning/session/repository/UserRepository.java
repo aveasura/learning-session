@@ -12,7 +12,7 @@ public class UserRepository {
         this.userDAO = userDAO;
     }
 
-    public User findUserById(int id) {
+    public User findUserById(long id) {
         return userDAO.findUserById(id);
     }
 
@@ -23,4 +23,9 @@ public class UserRepository {
     public long createUser(String username, String password) {
         return userDAO.createUser(username, password);
     }
+
+    public boolean isUserExist(User user) {
+        return userDAO.isUserExist(user);
+    }
+
 }

@@ -29,7 +29,7 @@ public class RegistrationController extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         HttpSession session = req.getSession(false);
 
-        if (session != null && session.getAttribute("username") != null) {
+        if (session != null && session.getAttribute("userId") != null) {
             redirect(req, resp, ACCOUNT_REDIRECT, "Сессия уже активна -> редирект на страницу аккаунта");
             return;
         }

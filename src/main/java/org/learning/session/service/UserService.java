@@ -10,33 +10,17 @@ public class UserService {
         this.userRepository = userRepository;
     }
 
-    public User findUserById(long id) {
-        return userRepository.findUserById(id);
-    }
+    public long createUserAndGetThisId(String username, String password) throws ValidationException {
 
-    public User findUserByUsername(String username) {
-        User user = userRepository.findUserByUsername(username);
-
-        return user;
-    }
-
-    public long createUser(String username, String password) throws ValidationException {
-
-        // Проверяем логин на заполненность. || Потом можно добавить проверку на занятость логина
-        if (username == null || username.isBlank()) {
-            throw new ValidationException("Логин не может быть пустым");
-        }
-
-        // Проверка пароля
-        if (password == null || password.isBlank()) {
-            throw new ValidationException("Пароль не может быть пустым");
-        }
+        isValidLogin(username);
+        isLoginBusy(username);
+        isPasswordValid(password);
 
         return userRepository.createUser(username, password);
     }
 
     public long authenticateUser(String username, String password) throws ValidationException {
-        User user = findUserByUsername(username);
+        User user = userRepository.findUserByUsername(username);
 
         isLoginExist(user);
         isPasswordValid(user, password);
@@ -44,11 +28,31 @@ public class UserService {
         return user.getId();
     }
 
-    private void isLoginExist(User user) throws ValidationException {
-        boolean result = userRepository.isUserExist(user);
+    public void deleteByUserId(long userId) throws ValidationException {
+        User user = userRepository.findUserById(userId);
+        if (user != null) {
+            userRepository.deleteByUserId(userId);
+        } else {
+            throw new ValidationException("Пользователь с таким ID не существует");
+        }
+    }
 
-        if (!result) {
-            throw new ValidationException("Неправильный логин");
+    private void isLoginBusy(String username) throws ValidationException {
+        User user = userRepository.findUserByUsername(username);
+        if (user != null) {
+            throw new ValidationException("Этот логин уже используется кем-то");
+        }
+    }
+
+    private void isValidLogin(String username) throws ValidationException {
+        if (username == null || username.isBlank()) {
+            throw new ValidationException("Логин не может быть пустым");
+        }
+    }
+
+    private void isPasswordValid(String password) throws ValidationException {
+        if (password == null || password.isBlank()) {
+            throw new ValidationException("Пароль не может быть пустым");
         }
     }
 
@@ -60,13 +64,11 @@ public class UserService {
         }
     }
 
-    public void deleteByUserId(long userId) throws ValidationException {
+    private void isLoginExist(User user) throws ValidationException {
+        boolean result = userRepository.isUserExist(user);
 
-        User user = findUserById(userId);
-        if (user != null) {
-            userRepository.deleteByUserId(userId);
-        } else {
-            throw new ValidationException("Пользователь с таким ID не существует");
+        if (!result) {
+            throw new ValidationException("Неправильный логин");
         }
     }
 }

@@ -29,7 +29,7 @@ public class AccountController extends HttpServlet {
 
         // запрет на посещение страницы для не залогиненных пользователей.
         HttpSession session = req.getSession(false);
-        if (session.getAttribute("userId") == null) {
+        if (session == null || session.getAttribute("userId") == null) {
             redirect(req, resp, HOME_REDIRECT, "Чтобы попасть на эту страницу зайдите в аккаунт или " +
                     "зарегистрируйтесь");
             return;
@@ -50,7 +50,6 @@ public class AccountController extends HttpServlet {
         } catch (ValidationException e) {
             redirect(req, resp, ACCOUNT_REDIRECT, e.getMessage());
         }
-
     }
 
     private void redirect(HttpServletRequest req, HttpServletResponse resp, String path, String message) throws IOException {

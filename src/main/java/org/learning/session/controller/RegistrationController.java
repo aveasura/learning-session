@@ -51,7 +51,7 @@ public class RegistrationController extends HttpServlet {
         }
 
         try {
-            long userId = userService.createUser(username, password);
+            long userId = userService.createUserAndGetThisId(username, password);
             session.setAttribute("userId", userId);
             session.setAttribute("username", username);
 

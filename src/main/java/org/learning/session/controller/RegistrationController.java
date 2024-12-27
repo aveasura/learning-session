@@ -7,12 +7,14 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import org.learning.session.service.UserService;
+import org.learning.session.service.ValidationException;
 
 import java.io.IOException;
 
 @WebServlet("/registration")
 public class RegistrationController extends HttpServlet {
     private static final String REGISTRATION_PAGE = "/WEB-INF/home/auth/registration.jsp";
+    private static final String REGISTRATION_REDIRECT = "/registration";
     private static final String ACCOUNT_REDIRECT = "/account";
 
     private UserService userService;
@@ -48,11 +50,15 @@ public class RegistrationController extends HttpServlet {
             return;
         }
 
-        long userId = userService.createUser(username, password);
-        session.setAttribute("userId", userId);
-        session.setAttribute("username", username);
+        try {
+            long userId = userService.createUser(username, password);
+            session.setAttribute("userId", userId);
+            session.setAttribute("username", username);
 
-        redirect(req, resp, ACCOUNT_REDIRECT, "Пользователь успешно зарегистрирован. ID: " + userId);
+            redirect(req, resp, ACCOUNT_REDIRECT, "Пользователь успешно зарегистрирован. ID: " + userId);
+        } catch (ValidationException e) {
+            redirect(req, resp, REGISTRATION_REDIRECT, e.getMessage());
+        }
     }
 
     private void redirect(HttpServletRequest req, HttpServletResponse resp, String path, String message) throws IOException {

@@ -18,16 +18,16 @@ public class UserService {
         return userRepository.findUserByUsername(username);
     }
 
-    public long createUser(String username, String password) {
+    public long createUser(String username, String password) throws ValidationException {
 
         // Проверяем логин на заполненность. || Потом можно добавить проверку на занятость логина
         if (username == null || username.isBlank()) {
-            throw new RuntimeException("Логин не может быть пустым");
+            throw new ValidationException("Логин не может быть пустым");
         }
 
         // Проверка пароля
         if (password == null || password.isBlank()) {
-            throw new RuntimeException("Пароль не может быть пустым");
+            throw new ValidationException("Пароль не может быть пустым");
         }
 
         return userRepository.createUser(username, password);

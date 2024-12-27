@@ -59,4 +59,14 @@ public class UserService {
             throw new ValidationException("Неправильный пароль");
         }
     }
+
+    public void deleteByUserId(long userId) throws ValidationException {
+
+        User user = findUserById(userId);
+        if (user != null) {
+            userRepository.deleteByUserId(userId);
+        } else {
+            throw new ValidationException("Пользователь с таким ID не существует");
+        }
+    }
 }

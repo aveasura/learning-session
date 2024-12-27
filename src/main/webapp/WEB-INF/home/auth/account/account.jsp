@@ -24,5 +24,11 @@
     сессии</a><br/>
 <a href="${pageContext.request.contextPath}/account">Тест - попытка зайти на /account из меню /account</a><br/>
 
+<hr/>
+<form action="${pageContext.request.contextPath}/account" method="post">
+<button type="submit">Удалить аккаунт</button>
+
+</form>
+
 </body>
 </html>

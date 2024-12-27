@@ -28,4 +28,7 @@ public class UserRepository {
         return userDAO.isUserExist(user);
     }
 
+    public void deleteByUserId(long userId) {
+        userDAO.deleteById(userId);
+    }
 }

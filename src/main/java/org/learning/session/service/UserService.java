@@ -19,6 +19,17 @@ public class UserService {
     }
 
     public long createUser(String username, String password) {
+
+        // Проверяем логин на заполненность. || Потом можно добавить проверку на занятость логина
+        if (username == null || username.isBlank()) {
+            throw new RuntimeException("Логин не может быть пустым");
+        }
+
+        // Проверка пароля
+        if (password == null || password.isBlank()) {
+            throw new RuntimeException("Пароль не может быть пустым");
+        }
+
         return userRepository.createUser(username, password);
     }
 }

@@ -6,7 +6,7 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
-import org.learning.session.model.repository.UserRepository;
+import org.learning.session.service.UserService;
 
 import java.io.IOException;
 
@@ -16,8 +16,13 @@ public class RegistrationController extends HttpServlet {
     private static final String REGISTRATION_REDIRECT = "/registration";
     private static final String ACCOUNT_REDIRECT = "/account";
 
-    // Todo: Потом заменить на DI в конструкторе
-    private final UserRepository userRepository = new UserRepository();
+    private UserService userService;
+
+    @Override
+    public void init() throws ServletException {
+        // Получить зависимость из контекста
+        userService = (UserService) getServletContext().getAttribute("userService");
+    }
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -58,7 +63,7 @@ public class RegistrationController extends HttpServlet {
         }
 
         // Допускаем к регистрации и устанавливаем аттрибуты сессии.
-        long userId = userRepository.createUser(username, password);
+        long userId = userService.createUser(username, password);
 
         session.setAttribute("userId", userId);
         session.setAttribute("username", username);
@@ -66,7 +71,7 @@ public class RegistrationController extends HttpServlet {
         redirect(req, resp, ACCOUNT_REDIRECT, "Пользователь с ID: " + userId + " успешно зарегистрирован.");
 
         // просто для примера, работа метода(должен быть в сервисе!):
-        // User user = userRepository.findById(userId);
+        // User user = userDao.findById(userId);
         // System.out.println(user.getUsername());
     }
 

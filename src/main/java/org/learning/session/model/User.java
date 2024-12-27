@@ -1,4 +1,4 @@
-package org.learning.session.model.entity;
+package org.learning.session.model;
 
 import java.util.Objects;
 

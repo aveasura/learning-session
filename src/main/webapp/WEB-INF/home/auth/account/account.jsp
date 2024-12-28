@@ -26,8 +26,13 @@
 
 <hr/>
 <form action="${pageContext.request.contextPath}/account" method="post">
-<button type="submit">Удалить аккаунт</button>
+    <button type="submit">Выйти из аккаунта</button>
+</form>
 
+<hr/>
+
+<form action="${pageContext.request.contextPath}/delete" method="post">
+    <button type="submit">Удалить аккаунт</button>
 </form>
 
 </body>

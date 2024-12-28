@@ -1,0 +1,13 @@
+org\learning\session\service\ValidationException.class
+org\learning\session\listener\DependencyInjectionListener.class
+org\learning\session\repository\UserRepository.class
+org\learning\session\service\UserService.class
+org\learning\session\controller\LoginController.class
+org\learning\session\controller\filter\EncodingFilter.class
+org\learning\session\controller\HomeController.class
+org\learning\session\dao\UserDAO.class
+org\learning\session\model\User.class
+org\learning\session\controller\AccountController.class
+org\learning\session\controller\filter\AccessFilter.class
+org\learning\session\controller\RegistrationController.class
+org\learning\session\controller\DeleteAccountController.class

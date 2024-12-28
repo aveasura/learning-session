@@ -24,15 +24,6 @@ public class AccountController extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-
-        // запрет на посещение страницы для не залогиненных пользователей.
-        HttpSession session = req.getSession(false);
-        if (session == null || session.getAttribute("userId") == null) {
-            redirect(req, resp, HOME_REDIRECT, "Чтобы попасть на эту страницу зайдите в аккаунт или " +
-                    "зарегистрируйтесь");
-            return;
-        }
-
         req.getRequestDispatcher(ACCOUNT_PAGE).forward(req, resp);
     }
 

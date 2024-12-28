@@ -27,13 +27,6 @@ public class LoginController extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        HttpSession session = req.getSession(false);
-
-        if (session != null && session.getAttribute("userId") != null) {
-            redirect(req, resp, ACCOUNT_REDIRECT, "Сессия уже активна -> редирект на страницу аккаунта");
-            return;
-        }
-
         req.getRequestDispatcher(LOGIN_PAGE).forward(req, resp);
     }
 
@@ -43,12 +36,6 @@ public class LoginController extends HttpServlet {
         String username = req.getParameter("username");
         String password = req.getParameter("password");
         HttpSession session = req.getSession();
-
-        // Проверка активна ли сессия для данного юзера(попытка лоигн с X вкладок). || подумать: фильтры
-        if (session.getAttribute("userId") != null) {
-            redirect(req, resp, ACCOUNT_REDIRECT, "Вы уже авторизованы. ID: " + session.getAttribute("userId"));
-            return;
-        }
 
         try {
             long userId = userService.authenticateUser(username, password);

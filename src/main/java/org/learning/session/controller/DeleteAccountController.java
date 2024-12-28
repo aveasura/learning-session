@@ -11,40 +11,29 @@ import org.learning.session.service.ValidationException;
 
 import java.io.IOException;
 
-@WebServlet("/login")
-public class LoginController extends HttpServlet {
-    private static final String LOGIN_PAGE = "/WEB-INF/home/auth/login.jsp";
-    private static final String LOGIN_REDIRECT = "/login";
+@WebServlet("/delete")
+public class DeleteAccountController extends HttpServlet {
+    private static final String HOME_REDIRECT = "/home";
     private static final String ACCOUNT_REDIRECT = "/account";
 
     private UserService userService;
 
     @Override
     public void init() throws ServletException {
-        // Получить зависимость из контекста
         userService = (UserService) getServletContext().getAttribute("userService");
     }
 
     @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        req.getRequestDispatcher(LOGIN_PAGE).forward(req, resp);
-    }
-
-    @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-
-        String username = req.getParameter("username");
-        String password = req.getParameter("password");
         HttpSession session = req.getSession();
+        long userId = (long) session.getAttribute("userId");
 
         try {
-            long userId = userService.authenticateUser(username, password);
-            session.setAttribute("userId", userId);
-            session.setAttribute("username", username);
-
-            redirect(req, resp, ACCOUNT_REDIRECT, "Пользователь успешно авторизован. ID: " + userId);
+            userService.deleteByUserId(userId);
+            session.invalidate();
+            resp.sendRedirect(HOME_REDIRECT);
         } catch (ValidationException e) {
-            redirect(req, resp, LOGIN_REDIRECT, e.getMessage());
+            redirect(req, resp, ACCOUNT_REDIRECT, e.getMessage());
         }
     }
 

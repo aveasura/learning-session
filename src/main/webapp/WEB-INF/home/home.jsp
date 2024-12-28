@@ -25,6 +25,8 @@
 <a href="${pageContext.request.contextPath}/registration">Зарегистрироваться</a><br/>
 <a href="${pageContext.request.contextPath}/login">Войти</a>
 
-<br/><hr/>
+<hr/>
+<a href="${pageContext.request.contextPath}/delete">Тест(405) - удалить аккаунт через гет(должна быть ошибка)</a>
+
 </body>
 </html>

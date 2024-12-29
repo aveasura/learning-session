@@ -3,6 +3,8 @@ package org.learning.session.service;
 import org.learning.session.model.User;
 import org.learning.session.repository.UserRepository;
 
+import java.util.List;
+
 public class UserService {
     private final UserRepository userRepository;
 
@@ -10,10 +12,9 @@ public class UserService {
         this.userRepository = userRepository;
     }
 
-    public long createUserAndGetThisId(String username, String password) throws ValidationException {
+    public long createUserAndGetId(String username, String password) throws ValidationException {
 
-        isValidLogin(username);
-        isLoginBusy(username);
+        validateLoginExistence(username, false);
         isPasswordValid(password);
 
         return userRepository.createUser(username, password);
@@ -22,14 +23,23 @@ public class UserService {
     public long authenticateUser(String username, String password) throws ValidationException {
         User user = userRepository.findUserByUsername(username);
 
-        isLoginExist(user);
+        validateLoginExistence(username, true);
         isPasswordValid(user, password);
 
         return user.getId();
     }
 
+    public List<User> getAllUsers() {
+        List<User> users = userRepository.getAllUsers();
+
+        // можно проверить список на пустоту
+
+        return users;
+    }
+
     public void deleteByUserId(long userId) throws ValidationException {
         User user = userRepository.findUserById(userId);
+
         if (user != null) {
             userRepository.deleteByUserId(userId);
         } else {
@@ -37,16 +47,19 @@ public class UserService {
         }
     }
 
-    private void isLoginBusy(String username) throws ValidationException {
+    private void validateLoginExistence(String username, boolean shouldExist) throws ValidationException {
         User user = userRepository.findUserByUsername(username);
-        if (user != null) {
-            throw new ValidationException("Этот логин уже используется кем-то");
-        }
-    }
 
-    private void isValidLogin(String username) throws ValidationException {
         if (username == null || username.isBlank()) {
             throw new ValidationException("Логин не может быть пустым");
+        }
+
+        if (shouldExist && user == null) {
+            throw new ValidationException("Пользователь с таким логином не найден");
+        }
+
+        if (!shouldExist && user != null) {
+            throw new ValidationException("Этот логин уже используется кем-то");
         }
     }
 
@@ -61,14 +74,6 @@ public class UserService {
 
         if (!result) {
             throw new ValidationException("Неправильный пароль");
-        }
-    }
-
-    private void isLoginExist(User user) throws ValidationException {
-        boolean result = userRepository.isUserExist(user);
-
-        if (!result) {
-            throw new ValidationException("Неправильный логин");
         }
     }
 }

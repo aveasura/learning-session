@@ -1,34 +1,36 @@
 package org.learning.session.repository;
 
-import org.learning.session.dao.UserDAO;
+import org.learning.session.dao.UserDaoImpl;
 import org.learning.session.model.User;
+
+import java.util.List;
 
 // Класс предоставляет данные из DAO
 public class UserRepository {
 
-    private final UserDAO userDAO;
+    private final UserDaoImpl userDaoImpl;
 
-    public UserRepository(UserDAO userDAO) {
-        this.userDAO = userDAO;
+    public UserRepository(UserDaoImpl userDaoImpl) {
+        this.userDaoImpl = userDaoImpl;
     }
 
     public User findUserById(long id) {
-        return userDAO.findUserById(id);
+        return userDaoImpl.readById(id);
     }
 
     public User findUserByUsername(String username) {
-        return userDAO.findUserByUsername(username);
+        return userDaoImpl.readByUsername(username);
     }
 
     public long createUser(String username, String password) {
-        return userDAO.createUser(username, password);
+        return userDaoImpl.create(username, password);
     }
 
-    public boolean isUserExist(User user) {
-        return userDAO.isUserExist(user);
+    public List<User> getAllUsers() {
+        return userDaoImpl.readAll();
     }
 
     public void deleteByUserId(long userId) {
-        userDAO.deleteById(userId);
+        userDaoImpl.delete(userId);
     }
 }

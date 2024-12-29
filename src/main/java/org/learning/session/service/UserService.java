@@ -32,10 +32,7 @@ public class UserService {
     public List<User> getAllUsers() {
         List<User> users = userRepository.getAllUsers();
 
-        if (users.isEmpty()) {
-            System.out.println("пустой");
-            throw new RuntimeException("Список пуст");
-        }
+        // можно проверить список на пустоту
 
         return users;
     }

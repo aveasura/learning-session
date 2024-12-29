@@ -15,7 +15,6 @@ public class UserDaoImpl implements UserDao {
         this.connection = connection;
     }
 
-
     @Override
     public long create(String username, String password) {
         String sql = "INSERT INTO users (user_name, user_password) VALUES (?, ?) RETURNING user_id";
@@ -65,6 +64,7 @@ public class UserDaoImpl implements UserDao {
     public User readByUsername(String username) {
         String sql = "SELECT * FROM users WHERE user_name = ?";
         try (PreparedStatement statement = connection.prepareStatement(sql)) {
+
             statement.setString(1, username);
             ResultSet rs = statement.executeQuery();
 
@@ -85,6 +85,22 @@ public class UserDaoImpl implements UserDao {
 
     @Override
     public User readById(long id) {
+        String sql = "SELECT * FROM users WHERE user_id = ?";
+        try (PreparedStatement statement = connection.prepareStatement(sql)) {
+
+            statement.setLong(1, id);
+            ResultSet rs = statement.executeQuery();
+
+            if (rs.next()) {
+                return new User(
+                        rs.getLong("user_id"),
+                        rs.getString("user_name"),
+                        rs.getString("user_password"));
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
 
         return null;
     }
@@ -92,12 +108,18 @@ public class UserDaoImpl implements UserDao {
     @Override
     public void update(long id) {
 
-
     }
 
     @Override
     public void delete(long id) {
+        String sql = "DELETE FROM users WHERE user_id = ?";
+        try (PreparedStatement statement = connection.prepareStatement(sql)) {
 
+            statement.setLong(1, id);
+            statement.executeUpdate();
 
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 }

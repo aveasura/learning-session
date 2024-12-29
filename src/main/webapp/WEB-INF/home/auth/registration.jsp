@@ -25,5 +25,7 @@
     <button type="submit">Зарегистрироваться</button>
 </form>
 
+<br/>
+<a href="${pageContext.request.contextPath}/home">Вернуться</a>
 </body>
 </html>

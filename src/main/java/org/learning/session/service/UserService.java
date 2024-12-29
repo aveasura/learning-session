@@ -12,6 +12,14 @@ public class UserService {
         this.userRepository = userRepository;
     }
 
+    public void updateUserById(long userId, String username, String password) {
+
+        // todo валидация
+        // ...
+
+        userRepository.updateUser(userId, username, password);
+    }
+
     public long createUserAndGetId(String username, String password) throws ValidationException {
 
         validateLoginExistence(username, false);

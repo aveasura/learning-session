@@ -12,10 +12,14 @@ public class UserService {
         this.userRepository = userRepository;
     }
 
-    public void updateUserById(long userId, String username, String password) {
+    public void updateUserById(long userId, String username, String password) throws ValidationException {
 
-        // todo валидация
-        // ...
+        User currentUser = userRepository.findUserById(userId);
+        if (currentUser != null && !currentUser.getUsername().equals(username)) {
+            validateLoginExistence(username, false);
+        }
+
+        validatePassword(password);
 
         userRepository.updateUser(userId, username, password);
     }
@@ -23,7 +27,7 @@ public class UserService {
     public long createUserAndGetId(String username, String password) throws ValidationException {
 
         validateLoginExistence(username, false);
-        isPasswordValid(password);
+        validatePassword(password);
 
         return userRepository.createUser(username, password);
     }
@@ -32,15 +36,17 @@ public class UserService {
         User user = userRepository.findUserByUsername(username);
 
         validateLoginExistence(username, true);
-        isPasswordValid(user, password);
+        validatePassword(user, password);
 
         return user.getId();
     }
 
-    public List<User> getAllUsers() {
+    public List<User> getAllUsers() throws ValidationException {
         List<User> users = userRepository.getAllUsers();
 
-        // можно проверить список на пустоту
+        if (users.isEmpty()) {
+            throw new ValidationException("Нет пользователей в базе");
+        }
 
         return users;
     }
@@ -56,11 +62,11 @@ public class UserService {
     }
 
     private void validateLoginExistence(String username, boolean shouldExist) throws ValidationException {
-        User user = userRepository.findUserByUsername(username);
-
         if (username == null || username.isBlank()) {
             throw new ValidationException("Логин не может быть пустым");
         }
+
+        User user = userRepository.findUserByUsername(username);
 
         if (shouldExist && user == null) {
             throw new ValidationException("Пользователь с таким логином не найден");
@@ -71,13 +77,13 @@ public class UserService {
         }
     }
 
-    private void isPasswordValid(String password) throws ValidationException {
+    private void validatePassword(String password) throws ValidationException {
         if (password == null || password.isBlank()) {
             throw new ValidationException("Пароль не может быть пустым");
         }
     }
 
-    public void isPasswordValid(User user, String password) throws ValidationException {
+    public void validatePassword(User user, String password) throws ValidationException {
         boolean result = user.getPassword().equals(password);
 
         if (!result) {

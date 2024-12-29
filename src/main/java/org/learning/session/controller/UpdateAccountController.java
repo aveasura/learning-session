@@ -7,12 +7,14 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import org.learning.session.service.UserService;
+import org.learning.session.service.ValidationException;
 
 import java.io.IOException;
 
 @WebServlet("/account/update")
 public class UpdateAccountController extends HttpServlet {
     private static final String UPDATE_USER_PAGE = "/WEB-INF/home/auth/update.jsp";
+    private static final String UPDATE_REDIRECT = "/account/update";
     private static final String ACCOUNT_REDIRECT = "/account";
 
     private UserService userService;
@@ -35,9 +37,12 @@ public class UpdateAccountController extends HttpServlet {
         HttpSession session = req.getSession();
         long userId = (long) session.getAttribute("userId");
 
-        userService.updateUserById(userId, username, password);
-
-        redirect(req, resp, ACCOUNT_REDIRECT, "Профиль успешно обновлён");
+        try {
+            userService.updateUserById(userId, username, password);
+            redirect(req, resp, ACCOUNT_REDIRECT, "Профиль успешно обновлён");
+        } catch (ValidationException e) {
+            redirect(req, resp, UPDATE_REDIRECT, e.getMessage());
+        }
     }
 
     private void redirect(HttpServletRequest req, HttpServletResponse resp, String path, String message) throws IOException {

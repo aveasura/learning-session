@@ -12,7 +12,7 @@ public interface UserDao {
     User readByUsername(String username);
     User readById(long id);
 
-    void update(long id);
+    void update(long id, String username, String password);
 
     void delete(long id);
 }

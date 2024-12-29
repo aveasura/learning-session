@@ -19,6 +19,7 @@ public class UserDaoImpl implements UserDao {
     @Override
     public long create(String username, String password) {
         String sql = "INSERT INTO users (user_name, user_password) VALUES (?, ?) RETURNING user_id";
+
         try (PreparedStatement statement = connection.prepareStatement(sql)) {
 
             statement.setString(1, username);
@@ -67,15 +68,18 @@ public class UserDaoImpl implements UserDao {
             statement.setString(1, username);
             ResultSet rs = statement.executeQuery();
 
-            return new User(
-                    rs.getLong("user_id"),
-                    rs.getString("user_name"),
-                    rs.getString("user_password"));
+            if (rs.next()) {
+                return new User(
+                        rs.getLong("user_id"),
+                        rs.getString("user_name"),
+                        rs.getString("user_password"));
+            }
 
         } catch (SQLException e) {
             e.printStackTrace();
         }
 
+        // Вернуть null если не нашли пользователя.
         return null;
     }
 

@@ -14,7 +14,6 @@ public class UserService {
 
     public long createUserAndGetId(String username, String password) throws ValidationException {
 
-        isValidLogin(username);
         validateLoginExistence(username, false);
         isPasswordValid(password);
 
@@ -43,6 +42,7 @@ public class UserService {
 
     public void deleteByUserId(long userId) throws ValidationException {
         User user = userRepository.findUserById(userId);
+
         if (user != null) {
             userRepository.deleteByUserId(userId);
         } else {
@@ -53,17 +53,16 @@ public class UserService {
     private void validateLoginExistence(String username, boolean shouldExist) throws ValidationException {
         User user = userRepository.findUserByUsername(username);
 
+        if (username == null || username.isBlank()) {
+            throw new ValidationException("Логин не может быть пустым");
+        }
+
         if (shouldExist && user == null) {
             throw new ValidationException("Пользователь с таким логином не найден");
         }
+
         if (!shouldExist && user != null) {
             throw new ValidationException("Этот логин уже используется кем-то");
-        }
-    }
-
-    private void isValidLogin(String username) throws ValidationException {
-        if (username == null || username.isBlank()) {
-            throw new ValidationException("Логин не может быть пустым");
         }
     }
 

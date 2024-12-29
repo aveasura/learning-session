@@ -39,6 +39,7 @@ public class UpdateAccountController extends HttpServlet {
 
         try {
             userService.updateUserById(userId, username, password);
+            session.setAttribute("username", username);
             redirect(req, resp, ACCOUNT_REDIRECT, "Профиль успешно обновлён");
         } catch (ValidationException e) {
             redirect(req, resp, UPDATE_REDIRECT, e.getMessage());

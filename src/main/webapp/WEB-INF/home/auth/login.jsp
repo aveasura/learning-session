@@ -19,7 +19,7 @@
     <input type="text" id="username" name="username" placeholder="username" required><br/><br/>
 
     <label for="password">Введите пароль от аккаунта</label>
-    <input type="text" id="password" name="password" placeholder="password" required><br/><br/>
+    <input type="password" id="password" name="password" placeholder="password" required><br/><br/>
 
     <button type="submit">Войти</button>
 </form>

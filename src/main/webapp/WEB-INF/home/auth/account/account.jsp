@@ -12,31 +12,27 @@
 </head>
 <body>
 
-<h1>Личный кабинет пользователя ${sessionScope.username}.</h1>
+<h1>Добро пожаловать, ${sessionScope.username}.</h1>
 
-
-<p>Это страница аккаунта</p>
-<a>...........тут будет разная инфа..............</a>
+<p>Страница аккаунта</p>
+<p>разный текст 1</p>
+<p>разный текст 2</p>
+<p>разный текст 3</p>
 <br/>
-<a href="${pageContext.request.contextPath}/account/update">Update account info</a>
-<br/>
-<hr/>
 
-<a href="${pageContext.request.contextPath}/home">Go to home</a><br/>
-<a href="${pageContext.request.contextPath}/registration">Тест - попытка зайти на /registration при активной
-    сессии</a><br/>
-<a href="${pageContext.request.contextPath}/account">Тест - попытка зайти на /account из меню /account</a><br/>
-
-<hr/>
-<form action="${pageContext.request.contextPath}/account" method="post">
+<form action="${pageContext.request.contextPath}/account/logout" method="post">
     <button type="submit">Выйти из аккаунта</button>
 </form>
-<hr/>
 
-<form action="${pageContext.request.contextPath}/delete" method="post">
+<form action="${pageContext.request.contextPath}/account/delete" method="post">
     <button type="submit">Удалить аккаунт</button>
 </form>
 <hr/>
+
+<ul>
+    <li><a href="${pageContext.request.contextPath}/home">На главную страницу</a></li>
+    <li><a href="${pageContext.request.contextPath}/account/update">Редактировать профиль</a></li>
+</ul>
 
 </body>
 </html>

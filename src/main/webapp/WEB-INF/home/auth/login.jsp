@@ -18,14 +18,17 @@
     <label for="username">Введите ваш логин</label>
     <input type="text" id="username" name="username" placeholder="username" required><br/><br/>
 
-    <label for="password">Введите ваш пароль</label>
+    <label for="password">Введите пароль от аккаунта</label>
     <input type="text" id="password" name="password" placeholder="password" required><br/><br/>
 
-    <hr/>
     <button type="submit">Войти</button>
 </form>
+<hr/>
 
-<a href="${pageContext.request.contextPath}/home">Вернуться</a>
+<ul>
+    <li><a href="${pageContext.request.contextPath}/home">Вернуться</a></li>
+    <li><a href="${pageContext.request.contextPath}/registration">Зарегистрироваться</a></li>
+</ul>
 
 </body>
 </html>

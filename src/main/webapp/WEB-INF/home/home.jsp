@@ -13,20 +13,16 @@
 <body>
 
 <h1>Главная страница сайта</h1>
-<p>.......разный текст 1312312.............</p>
-<p>.......12314234.............</p>
-<p>.....р56р56р5........</p>
-<p>текст</p>
-<p>         фывфвыфввы</p>
-
-<br/><hr/>
-
-<a href="${pageContext.request.contextPath}/home">Обновить страницу сайта</a><br/>
-<a href="${pageContext.request.contextPath}/registration">Зарегистрироваться</a><br/>
-<a href="${pageContext.request.contextPath}/login">Войти</a>
-
+<p>разный текст 1</p>
+<p>разный текст 2</p>
+<p>разный текст 3</p>
+<p>разный текст 4</p>
 <hr/>
-<a href="${pageContext.request.contextPath}/delete">Тест(405) - удалить аккаунт через гет(должна быть ошибка)</a>
+
+<ul>
+    <li><a href="${pageContext.request.contextPath}/registration">Зарегистрироваться</a></li>
+    <li><a href="${pageContext.request.contextPath}/login">Войти</a></li>
+</ul>
 
 </body>
 </html>

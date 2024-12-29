@@ -12,20 +12,23 @@
 </head>
 <body>
 
-<h1>Для того чтобы зарегистрироваться, выполните следующие действия:</h1>
+<h1>Страница регистрации нового пользователя</h1>
 
 <form action="${pageContext.request.contextPath}/registration" method="post">
-    <label for="username">Укажите логин для регистрации:</label>
+    <label for="username">Укажите логин для регистрации</label>
     <input type="text" id="username" name="username" placeholder="login" required><br/><br/>
 
-    <label for="password">Задайте пароль:</label>
+    <label for="password">Задайте пароль для аккаунта</label>
     <input type="password" id="password" name="password" placeholder="password" required><br/><br/>
 
-    <hr/>
     <button type="submit">Зарегистрироваться</button>
 </form>
+<hr/>
 
-<br/>
-<a href="${pageContext.request.contextPath}/home">Вернуться</a>
+<ul>
+    <li><a href="${pageContext.request.contextPath}/home">Вернуться</a></li>
+    <li><a href="${pageContext.request.contextPath}/login">Войти</a></li>
+</ul>
+
 </body>
 </html>

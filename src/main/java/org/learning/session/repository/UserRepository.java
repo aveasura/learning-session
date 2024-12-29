@@ -33,4 +33,8 @@ public class UserRepository {
     public void deleteByUserId(long userId) {
         userDaoImpl.delete(userId);
     }
+
+    public void updateUser(long userId, String username, String password) {
+        userDaoImpl.update(userId, username, password);
+    }
 }

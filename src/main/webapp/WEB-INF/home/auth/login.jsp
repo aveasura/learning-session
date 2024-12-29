@@ -25,5 +25,7 @@
     <button type="submit">Войти</button>
 </form>
 
+<a href="${pageContext.request.contextPath}/home">Вернуться</a>
+
 </body>
 </html>

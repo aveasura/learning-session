@@ -14,8 +14,11 @@
 
 <h1>Личный кабинет пользователя ${sessionScope.username}.</h1>
 
+
 <p>Это страница аккаунта</p>
 <a>...........тут будет разная инфа..............</a>
+<br/>
+<a href="${pageContext.request.contextPath}/account/update">Update account info</a>
 <br/>
 <hr/>
 
@@ -28,12 +31,12 @@
 <form action="${pageContext.request.contextPath}/account" method="post">
     <button type="submit">Выйти из аккаунта</button>
 </form>
-
 <hr/>
 
 <form action="${pageContext.request.contextPath}/delete" method="post">
     <button type="submit">Удалить аккаунт</button>
 </form>
+<hr/>
 
 </body>
 </html>

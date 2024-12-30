@@ -21,7 +21,6 @@ public class RegistrationController extends HttpServlet {
 
     @Override
     public void init() throws ServletException {
-        // Получить зависимость из контекста
         userService = (UserService) getServletContext().getAttribute("userService");
     }
 
@@ -44,7 +43,10 @@ public class RegistrationController extends HttpServlet {
 
             redirect(req, resp, ACCOUNT_REDIRECT, "Пользователь успешно зарегистрирован. ID: " + userId);
         } catch (ValidationException e) {
-            redirect(req, resp, REGISTRATION_REDIRECT, e.getMessage());
+            // redirect(req, resp, REGISTRATION_REDIRECT, e.getMessage());
+
+            req.setAttribute("error", e.getMessage());
+            req.getRequestDispatcher(REGISTRATION_PAGE).forward(req, resp);
         }
     }
 

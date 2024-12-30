@@ -6,6 +6,7 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" isELIgnored="false" language="java" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html>
 <head>
     <title>Registration</title>
@@ -13,6 +14,13 @@
 <body>
 
 <h1>Страница регистрации нового пользователя</h1>
+
+<%--Отобразить ошибку--%>
+<c:if test="${not empty error}">
+    <div style="color: red;">
+        <strong>${error}</strong>
+    </div>
+</c:if>
 
 <form action="${pageContext.request.contextPath}/registration" method="post">
     <label for="username">Укажите логин для регистрации</label>

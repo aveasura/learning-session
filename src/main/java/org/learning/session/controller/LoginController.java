@@ -1,5 +1,6 @@
 package org.learning.session.controller;
 
+import jakarta.servlet.ServletContext;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -8,8 +9,10 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import org.learning.session.service.UserService;
 import org.learning.session.service.ValidationException;
+import org.learning.session.validation.LoginValidator;
 
 import java.io.IOException;
+import java.util.Map;
 
 @WebServlet("/login")
 public class LoginController extends HttpServlet {
@@ -18,11 +21,14 @@ public class LoginController extends HttpServlet {
     private static final String ACCOUNT_REDIRECT = "/account";
 
     private UserService userService;
+    // private LoginValidator loginValidator;
 
     @Override
     public void init() throws ServletException {
-        // Получить зависимость из контекста
-        userService = (UserService) getServletContext().getAttribute("userService");
+        ServletContext context = getServletContext();
+        // this.loginValidator = (LoginValidator) context.getAttribute("loginValidator");
+
+        this.userService = (UserService) context.getAttribute("userService");
     }
 
     @Override
@@ -44,7 +50,9 @@ public class LoginController extends HttpServlet {
 
             redirect(req, resp, ACCOUNT_REDIRECT, "Пользователь успешно авторизован. ID: " + userId);
         } catch (ValidationException e) {
-            redirect(req, resp, LOGIN_REDIRECT, e.getMessage());
+            // Если ошибка валидации (например, логин уже занят), передаем сообщение в JSP, и отображаем (forward)
+            req.setAttribute("error", e.getMessage());
+            req.getRequestDispatcher(LOGIN_PAGE).forward(req, resp);
         }
     }
 

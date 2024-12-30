@@ -29,10 +29,12 @@ public class DependencyInjectionListener implements ServletContextListener {
             connection = DatabaseConnection.getConnection();
 
             // DI
+            // LoginValidator loginValidator = new LoginValidatorImpl();
             UserDaoImpl userDaoImpl = new UserDaoImpl(connection);
             UserRepository userRepository = new UserRepository(userDaoImpl);
             UserService userService = new UserService(userRepository);
 
+            // context.setAttribute("loginValidator", loginValidator);
             context.setAttribute("userService", userService);
         } catch (SQLException e) {
             throw new RuntimeException("Не удалось установить подключение к базе данных", e);

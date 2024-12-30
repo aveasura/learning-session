@@ -31,7 +31,7 @@ public class DeleteAccountController extends HttpServlet {
         try {
             userService.deleteByUserId(userId);
             session.invalidate();
-            resp.sendRedirect(HOME_REDIRECT);
+            redirect(req, resp, HOME_REDIRECT, "Сессия удалена, аккаунт удален, редирект на главную страницу");
         } catch (ValidationException e) {
             redirect(req, resp, ACCOUNT_REDIRECT, e.getMessage());
         }

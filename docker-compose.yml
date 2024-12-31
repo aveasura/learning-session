@@ -1,37 +1,26 @@
-version: '3.8'
+version: '3.9'
 
 services:
-  tomcat:
-    image: tomcat:11.0.2
-    container_name: tomcat
-    ports:
-      - "8080:8080"  # Пробрасываем порт 8080 из контейнера на 8080 на хосте
-    networks:
-      - mynetwork
-    volumes:
-      - ./target/learning-session.war:/usr/local/tomcat/webapps/learning-session.war  # Монтируем .war файл
-    depends_on:
-      - postgres
-    # Здесь можно добавить скрипт ожидания готовности базы данных, если требуется
-
-  postgres:
+  database:
     image: postgres:17
-    container_name: postgres
+    container_name: postgres_db
     environment:
-      POSTGRES_DB: learning-session  # Имя базы данных
-      POSTGRES_USER: postgres  # Имя пользователя
-      POSTGRES_PASSWORD: postgres  # Пароль пользователя
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: pass
+      POSTGRES_DB: test_db
     ports:
-      - "5432:5432"  # Пробрасываем порт PostgreSQL на хост
-    networks:
-      - mynetwork
+      - "5432:5432"
     volumes:
-      - postgres_data:/var/lib/postgresql/data  # Персистентное хранение данных PostgreSQL
+      - db_data:/var/lib/postgresql/data
+      - ./sql:/docker-entrypoint-initdb.d
 
-networks:
-  mynetwork:
-    driver: bridge
+  tomcat:
+    build: .
+    container_name: tomcat_server
+    ports:
+      - "8080:8080"
+    depends_on:
+      - database
 
 volumes:
-  postgres_data:
-    driver: local
+  db_data:

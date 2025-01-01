@@ -90,8 +90,4 @@ public class UserService {
             throw new ValidationException("Неправильный пароль");
         }
     }
-
-    public void createTable() {
-        userRepository.createTable();
-    }
 }

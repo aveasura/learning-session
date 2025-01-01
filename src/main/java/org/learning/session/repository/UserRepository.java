@@ -37,8 +37,4 @@ public class UserRepository {
     public void updateUser(long userId, String username, String password) {
         userDaoImpl.update(userId, username, password);
     }
-
-    public void createTable() {
-        userDaoImpl.createTableTMP();
-    }
 }

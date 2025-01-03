@@ -2,16 +2,15 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 
     <modelVersion>4.0.0</modelVersion>
-    <groupId>learning</groupId>
-    <artifactId>learning-session</artifactId>
+    <groupId>myapp</groupId>
+    <artifactId>spring-jdbc</artifactId>
     <packaging>war</packaging>
 
     <version>1.0-SNAPSHOT</version>
-    <name>learning-session Maven Webapp</name>
-
-    <url>http://maven.apache.org</url>
+    <name>spring-jdbc</name>
 
     <dependencies>
+        <!-- Servlet API -->
         <dependency>
             <groupId>jakarta.servlet</groupId>
             <artifactId>jakarta.servlet-api</artifactId>
@@ -19,10 +18,19 @@
             <scope>provided</scope>
         </dependency>
 
+        <!-- PostgreSQL JDBC Driver -->
         <dependency>
             <groupId>org.postgresql</groupId>
             <artifactId>postgresql</artifactId>
             <version>42.7.4</version>
+        </dependency>
+
+        <!-- Spring JDBC -->
+        <!-- https://mvnrepository.com/artifact/org.springframework/spring-jdbc -->
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-jdbc</artifactId>
+            <version>6.2.1</version>
         </dependency>
 
         <!-- JSTL API -->
@@ -33,7 +41,6 @@
         </dependency>
 
         <!-- JSTL Implementation -->
-        <!-- https://mvnrepository.com/artifact/org.glassfish.web/jakarta.servlet.jsp.jstl -->
         <dependency>
             <groupId>org.glassfish.web</groupId>
             <artifactId>jakarta.servlet.jsp.jstl</artifactId>
@@ -45,20 +52,17 @@
             <groupId>org.glassfish</groupId>
             <artifactId>jakarta.el</artifactId>
             <version>4.0.2</version>
-            <scope>test</scope>
         </dependency>
     </dependencies>
-
 
     <properties>
         <maven.compiler.source>17</maven.compiler.source>
         <maven.compiler.target>17</maven.compiler.target>
+
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
 
     <build>
-        <finalName>learning-session</finalName>
-
+        <finalName>spring-jdbc</finalName>
     </build>
-
 </project>

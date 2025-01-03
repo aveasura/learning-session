@@ -24,7 +24,7 @@ public class UserService {
         userRepository.updateUser(userId, username, password);
     }
 
-    public long createUserAndGetId(String username, String password) throws ValidationException {
+    public long createUser(String username, String password) throws ValidationException {
 
         validateLoginExistence(username, false);
         validatePassword(password);
@@ -68,12 +68,14 @@ public class UserService {
 
         User user = userRepository.findUserByUsername(username);
 
-        if (shouldExist && user == null) {
-            throw new ValidationException("Пользователь с таким логином не найден");
-        }
-
-        if (!shouldExist && user != null) {
-            throw new ValidationException("Этот логин уже используется кем-то");
+        if (shouldExist) {
+            if (user == null) {
+                throw new ValidationException("Пользователь с таким логином не найден");
+            }
+        } else {
+            if (user != null) {
+                throw new ValidationException("Этот логин уже используется кем-то");
+            }
         }
     }
 
@@ -89,5 +91,11 @@ public class UserService {
         if (!result) {
             throw new ValidationException("Неправильный пароль");
         }
+    }
+
+    public long getUserId(String username) {
+        User user = userRepository.findUserByUsername(username);
+
+        return user.getId();
     }
 }

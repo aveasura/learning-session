@@ -19,9 +19,9 @@ public class DataSourceConfig {
 
         dataSource.setDriverClassName("org.postgresql.Driver");
 
-        dataSource.setUrl(ConfigUtil.get(DB_URL));
-        dataSource.setUsername(ConfigUtil.get(DB_USER));
-        dataSource.setPassword(ConfigUtil.get(DB_PASSWORD));
+        dataSource.setUrl(DB_URL);
+        dataSource.setUsername(DB_USER);
+        dataSource.setPassword(DB_PASSWORD);
 
         return dataSource;
     }

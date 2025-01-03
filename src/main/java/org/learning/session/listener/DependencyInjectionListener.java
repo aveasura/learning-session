@@ -9,50 +9,30 @@ import jakarta.servlet.annotation.WebListener;
 import org.learning.session.dao.UserDaoImpl;
 import org.learning.session.repository.UserRepository;
 import org.learning.session.service.UserService;
-import org.learning.session.util.DatabaseConnection;
+import org.learning.session.util.DataSourceConfig;
 
-import java.sql.Connection;
-import java.sql.SQLException;
+import javax.sql.DataSource;
 
 @WebListener
 public class DependencyInjectionListener implements ServletContextListener {
 
-    private Connection connection;
+    private DataSource dataSource;
 
     @Override
     public void contextInitialized(ServletContextEvent sce) {
 
         ServletContext context = sce.getServletContext();
 
-        try {
-            // Создаем подключение к бд.
-            connection = DatabaseConnection.getConnection();
+        // Создаем подключение к бд.
+        dataSource = DataSourceConfig.getDataSource();
 
-            // DI
-            // LoginValidator loginValidator = new LoginValidatorImpl();
-            UserDaoImpl userDaoImpl = new UserDaoImpl(connection);
-            UserRepository userRepository = new UserRepository(userDaoImpl);
-            UserService userService = new UserService(userRepository);
+        // DI
+        // LoginValidator loginValidator = new LoginValidatorImpl();
+        UserDaoImpl userDaoImpl = new UserDaoImpl(dataSource);
+        UserRepository userRepository = new UserRepository(userDaoImpl);
+        UserService userService = new UserService(userRepository);
 
-            // context.setAttribute("loginValidator", loginValidator);
-            context.setAttribute("userService", userService);
-        } catch (SQLException e) {
-            throw new RuntimeException("Не удалось установить подключение к базе данных", e);
-        }
-    }
-
-    @Override
-    public void contextDestroyed(ServletContextEvent sce) {
-
-        // Закрываем соединение при остановке приложения
-        if (connection != null) {
-            try {
-                connection.close();
-            } catch (SQLException e) {
-                // Добавить ошибки в логгер
-                // ...
-                e.printStackTrace();
-            }
-        }
+        // context.setAttribute("loginValidator", loginValidator);
+        context.setAttribute("userService", userService);
     }
 }

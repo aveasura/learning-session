@@ -1,5 +1,6 @@
 package org.learning.session.repository;
 
+import org.learning.session.dao.UserDao;
 import org.learning.session.dao.UserDaoImpl;
 import org.learning.session.model.User;
 
@@ -8,33 +9,33 @@ import java.util.List;
 // Класс предоставляет данные из DAO
 public class UserRepository {
 
-    private final UserDaoImpl userDaoImpl;
+    private final UserDao userDao;
 
-    public UserRepository(UserDaoImpl userDaoImpl) {
-        this.userDaoImpl = userDaoImpl;
+    public UserRepository(UserDao userDao) {
+        this.userDao = userDao;
     }
 
     public User findUserById(long id) {
-        return userDaoImpl.readById(id);
+        return userDao.readById(id);
     }
 
     public User findUserByUsername(String username) {
-        return userDaoImpl.readByUsername(username);
+        return userDao.readByUsername(username);
     }
 
     public long createUser(String username, String password) {
-        return userDaoImpl.create(username, password);
+        return userDao.create(username, password);
     }
 
     public List<User> getAllUsers() {
-        return userDaoImpl.readAll();
+        return userDao.readAll();
     }
 
     public void deleteByUserId(long userId) {
-        userDaoImpl.delete(userId);
+        userDao.delete(userId);
     }
 
     public void updateUser(long userId, String username, String password) {
-        userDaoImpl.update(userId, username, password);
+        userDao.update(userId, username, password);
     }
 }

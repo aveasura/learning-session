@@ -1,4 +1,4 @@
-package org.learning.session.util;
+package org.learning.session.config;
 
 import java.io.IOException;
 import java.io.InputStream;

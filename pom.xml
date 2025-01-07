@@ -53,7 +53,18 @@
             <artifactId>jakarta.el</artifactId>
             <version>4.0.2</version>
         </dependency>
+
+        <!-- https://mvnrepository.com/artifact/org.springframework/spring-webmvc -->
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-webmvc</artifactId>
+            <version>6.2.1</version>
+        </dependency>
+
+
     </dependencies>
+
+
 
     <properties>
         <maven.compiler.source>17</maven.compiler.source>

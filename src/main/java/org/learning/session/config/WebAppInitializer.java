@@ -6,16 +6,19 @@ public class WebAppInitializer extends AbstractAnnotationConfigDispatcherServlet
 
     @Override
     protected Class<?>[] getRootConfigClasses() {
-        return null; // Если нет корневой конфигурации
+        // return null - если нет корневой конфигурации
+        return new Class[]{AppConfig.class};
     }
 
     @Override
     protected Class<?>[] getServletConfigClasses() {
-        return new Class[]{WebConfig.class}; // Конфигурация MVC
+        // Конфигурация MVC
+        return new Class[]{WebConfig.class};
     }
 
     @Override
     protected String[] getServletMappings() {
-        return new String[]{"/"}; // Все запросы перенаправляются в DispatcherServlet
+        // Все запросы перенаправляются в DispatcherServlet
+        return new String[]{"/"};
     }
 }

@@ -9,10 +9,8 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import org.learning.session.service.UserService;
 import org.learning.session.service.ValidationException;
-import org.learning.session.validation.LoginValidator;
 
 import java.io.IOException;
-import java.util.Map;
 
 @WebServlet("/login")
 public class LoginController extends HttpServlet {

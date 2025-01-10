@@ -36,6 +36,7 @@ public class AppConfig {
         return dataSource;
     }
 
+    // Можно явно создать бины тут. А можно оставить это спрингу. Создам сам.
     @Bean
     public UserDao userDao(DataSource dataSource) {
         return new UserDaoImpl(dataSource);

@@ -6,12 +6,14 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
+import org.springframework.stereotype.Repository;
 
 import javax.sql.DataSource;
 import java.sql.*;
 import java.util.List;
 
 // Класс напрямую общается с бд и предоставляет данные репозиторию (CRUD)
+// @Repository бин уже создан в апп конфиге
 public class UserDaoImpl implements UserDao {
 
     private final JdbcTemplate jdbcTemplate;

@@ -1,58 +1,50 @@
 package org.learning.session.controller;
 
-import jakarta.servlet.ServletException;
-import jakarta.servlet.annotation.WebServlet;
-import jakarta.servlet.http.HttpServlet;
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import org.learning.session.service.UserService;
 import org.learning.session.service.ValidationException;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
-import java.io.IOException;
+@Controller
+public class RegistrationController {
 
-@WebServlet("/registration")
-public class RegistrationController extends HttpServlet {
-    private static final String REGISTRATION_PAGE = "/WEB-INF/home/auth/registration.jsp";
-    private static final String REGISTRATION_REDIRECT = "/registration";
-    private static final String ACCOUNT_REDIRECT = "/account";
+    private final UserService userService;
 
-    private UserService userService;
-
-    @Override
-    public void init() throws ServletException {
-        userService = (UserService) getServletContext().getAttribute("userService");
+    public RegistrationController(UserService userService) {
+        this.userService = userService;
     }
 
-    @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        req.getRequestDispatcher(REGISTRATION_PAGE).forward(req, resp);
+    @GetMapping("/registration")
+    private String registrationPage() {
+        return "/auth/registration";
     }
 
-    @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-
-        String username = req.getParameter("username");
-        String password = req.getParameter("password");
-        HttpSession session = req.getSession();
-
+    @PostMapping("/registration")
+    private String doRegistration(@RequestParam String username,
+                                  @RequestParam String password,
+                                  HttpSession session,
+                                  Model model) {
         try {
+            // создать юзера
             long userId = userService.createUser(username, password);
 
+            // сохранить его данные в сессии
             session.setAttribute("userId", userId);
             session.setAttribute("username", username);
 
-            redirect(req, resp, ACCOUNT_REDIRECT, "Пользователь успешно зарегистрирован. ID: " + userId);
+            // сообщить об успешной регистрации (tmp?)
+            model.addAttribute("success", "Пользователь успешно зарегистрирован. ID: " + userId);
+
+            // и перенаправляем на страницу его аккаунта
+            return "redirect:/account";
         } catch (ValidationException e) {
-            // redirect(req, resp, REGISTRATION_REDIRECT, e.getMessage());
-
-            req.setAttribute("error", e.getMessage());
-            req.getRequestDispatcher(REGISTRATION_PAGE).forward(req, resp);
+            // Передать сообщение об ошибке обратно на страницу регистрации
+            model.addAttribute("error", e.getMessage());
+            return "/auth/registration";
         }
-    }
-
-    private void redirect(HttpServletRequest req, HttpServletResponse resp, String path, String message) throws IOException {
-        System.out.println(message);
-        resp.sendRedirect(req.getContextPath() + path);
     }
 }

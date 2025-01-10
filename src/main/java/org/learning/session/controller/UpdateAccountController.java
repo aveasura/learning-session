@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.*;
 
 @Controller
 @RequestMapping("/account")
-@SessionAttributes("userId")  // атрибут, который будет храниться в сессии
 public class UpdateAccountController {
 
     private final UserService userService;
@@ -27,7 +26,7 @@ public class UpdateAccountController {
     @PostMapping("/update")
     private String doUpdate(@RequestParam String username,
                             @RequestParam String password,
-                            @ModelAttribute("userId") Long userId,
+                            @SessionAttribute("userId") Long userId,
                             HttpSession session,
                             Model model) {
         try {

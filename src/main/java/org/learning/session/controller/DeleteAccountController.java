@@ -1,44 +1,39 @@
 package org.learning.session.controller;
 
-import jakarta.servlet.ServletException;
-import jakarta.servlet.annotation.WebServlet;
-import jakarta.servlet.http.HttpServlet;
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import org.learning.session.service.UserService;
 import org.learning.session.service.ValidationException;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.SessionAttribute;
 
-import java.io.IOException;
+@Controller
+@RequestMapping("/account")
+public class DeleteAccountController {
 
-@WebServlet("/account/delete")
-public class DeleteAccountController extends HttpServlet {
-    private static final String HOME_REDIRECT = "/home";
-    private static final String ACCOUNT_REDIRECT = "/account";
+    private final UserService userService;
 
-    private UserService userService;
-
-    @Override
-    public void init() throws ServletException {
-        userService = (UserService) getServletContext().getAttribute("userService");
+    public DeleteAccountController(UserService userService) {
+        this.userService = userService;
     }
 
-    @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        HttpSession session = req.getSession();
-        long userId = (long) session.getAttribute("userId");
-
+    @PostMapping("/delete")
+    private String doDelete(@SessionAttribute("userId") Long userId,
+                            HttpSession session,
+                            Model model) {
         try {
             userService.deleteByUserId(userId);
             session.invalidate();
-            redirect(req, resp, HOME_REDIRECT, "Сессия удалена, аккаунт удален, редирект на главную страницу");
-        } catch (ValidationException e) {
-            redirect(req, resp, ACCOUNT_REDIRECT, e.getMessage());
-        }
-    }
 
-    private void redirect(HttpServletRequest req, HttpServletResponse resp, String path, String message) throws IOException {
-        System.out.println(message);
-        resp.sendRedirect(req.getContextPath() + path);
+            // tmp
+            model.addAttribute("success", "Аккаунт удален. ID: " + userId);
+
+            return "redirect:/home";
+        } catch (ValidationException e) {
+            model.addAttribute("error", e.getMessage());
+            return "/auth/account/account";
+        }
     }
 }

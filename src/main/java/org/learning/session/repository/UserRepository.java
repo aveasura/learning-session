@@ -1,12 +1,11 @@
 package org.learning.session.repository;
 
 import org.learning.session.dao.UserDao;
-import org.learning.session.dao.UserDaoImpl;
 import org.learning.session.model.User;
-
 import java.util.List;
 
 // Класс предоставляет данные из DAO
+// @Repository бин уже создан в апп конфиге
 public class UserRepository {
 
     private final UserDao userDao;

@@ -12,6 +12,7 @@ import java.sql.*;
 import java.util.List;
 
 // Класс напрямую общается с бд и предоставляет данные репозиторию (CRUD)
+// @Repository бин уже создан в апп конфиге
 public class UserDaoImpl implements UserDao {
 
     private final JdbcTemplate jdbcTemplate;

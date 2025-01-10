@@ -5,6 +5,7 @@ import org.learning.session.repository.UserRepository;
 
 import java.util.List;
 
+// @Service бин уже создан в апп конфиге
 public class UserService {
     private final UserRepository userRepository;
 

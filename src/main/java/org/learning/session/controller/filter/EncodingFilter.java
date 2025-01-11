@@ -5,7 +5,7 @@ import jakarta.servlet.annotation.WebFilter;
 
 import java.io.IOException;
 
-@WebFilter("/*")
+// @WebFilter("/*") // "выключил" фильтр(аннотацию), так как перешел на thymeleaf, в котором установил кодировку.
 public class EncodingFilter implements Filter {
 
     @Override

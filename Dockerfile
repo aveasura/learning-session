@@ -2,7 +2,7 @@
 FROM tomcat:11.0.2-jdk21
 
 # Копируем файлы нашего веб-приложения в директорию Tomcat
-COPY target/spring-jdbc.war /usr/local/tomcat/webapps/ROOT.war
+COPY target/spring-app.war /usr/local/tomcat/webapps/ROOT.war
 
 # Expose указывает порт, на котором работает Tomcat (8080)
 EXPOSE 8080

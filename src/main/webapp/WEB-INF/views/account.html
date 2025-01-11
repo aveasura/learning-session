@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Account</title>
+</head>
+<body>
+<h1>Личный кабинет пользователя</h1>
+
+<p>Текст....1</p>
+<p>Текст....2</p>
+<p>Текст....3</p>
+
+<a th:href="@{/account/update}">Редактировать аккаунт</a>
+<hr>
+
+<form th:action="@{/account/logout}" method="post">
+    <button type="submit">Выйти из аккаунта</button>
+</form>
+
+<br>
+
+<form th:action="@{/account/delete}" method="post">
+    <button type="submit">Удалить аккаунт</button>
+</form>
+
+<hr>
+<a th:href="@{/home}">На главную страницу</a>
+
+</body>
+</html>

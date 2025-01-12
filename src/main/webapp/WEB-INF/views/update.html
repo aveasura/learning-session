@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Update</title>
+</head>
+<body>
+<h1>Страница для изменения данных профиля</h1>
+
+<!-- Отобразить ошибку -->
+<div th:if="${not #strings.isEmpty(error)}" style="color: red;">
+    <strong th:text="${error}"></strong>
+</div>
+
+<form th:action="@{/account/update}" method="post">
+    <label for="username">Введите новый логин</label>
+    <input type="text" id="username" name="username" placeholder="login" required>
+    <br><br>
+
+    <label for="password">Введите новый пароль</label>
+    <input type="password" id="password" name="password" placeholder="password" required>
+    <br><br>
+
+    <button type="submit">Отправить</button>
+</form>
+<hr>
+
+<a th:href="@{/account}">В личный кабинет</a>
+<br>
+<a th:href="@{/home}">На главную страницу</a>
+
+</body>
+</html>
